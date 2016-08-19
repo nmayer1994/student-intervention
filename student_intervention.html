@@ -11804,7 +11804,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Import libraries</span>
@@ -11856,14 +11856,14 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># TODO: Calculate number of students</span>
 <span class="n">n_students</span> <span class="o">=</span> <span class="n">student_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
 <span class="c1"># TODO: Calculate number of features</span>
-<span class="n">n_features</span> <span class="o">=</span> <span class="n">student_data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">n_features</span> <span class="o">=</span> <span class="n">student_data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
 
 <span class="c1"># TODO: Calculate passing students</span>
 <span class="n">n_passed</span> <span class="o">=</span> <span class="n">student_data</span><span class="p">[</span><span class="n">student_data</span><span class="o">.</span><span class="n">passed</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -11872,7 +11872,7 @@ div#notebook {
 <span class="n">n_failed</span> <span class="o">=</span> <span class="n">student_data</span><span class="p">[</span><span class="n">student_data</span><span class="o">.</span><span class="n">passed</span> <span class="o">==</span> <span class="s2">&quot;no&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
 <span class="c1"># TODO: Calculate graduation rate</span>
-<span class="n">grad_rate</span> <span class="o">=</span> <span class="n">n_passed</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">/</span> <span class="n">n_students</span>
+<span class="n">grad_rate</span> <span class="o">=</span> <span class="n">n_passed</span> <span class="o">*</span> <span class="mf">100.0</span> <span class="o">/</span> <span class="n">n_students</span>
 
 <span class="c1"># Print the results</span>
 <span class="k">print</span> <span class="s2">&quot;Total number of students: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n_students</span><span class="p">)</span>
@@ -11893,10 +11893,10 @@ div#notebook {
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Total number of students: 395
-Number of features: 31
+Number of features: 30
 Number of students who passed: 265
 Number of students who failed: 130
-Graduation rate of the class: 67.00%
+Graduation rate of the class: 67.09%
 </pre>
 </div>
 </div>
@@ -12177,6 +12177,7 @@ Testing set has 95 samples.
 <li>Logistic regression was used to develop the Trauma and Injury Severity Score, which is used heavily to predict the mortality rate of injured patients. <a href="https://en.wikipedia.org/wiki/Logistic_regression#Fields_and_example_applications">https://en.wikipedia.org/wiki/Logistic_regression#Fields_and_example_applications</a></li>
 <li>Logistic regression treats input data as variables of a mathematical function, making it easy to reason about (important features have larger coefficients). It has low computational requirements for predictions, and performs reasonably well on both small and large datasets. </li>
 <li>Logistic regression generally is only used to solve two-class problems (including one-vs-rest). Models can have high bias and may require larger datasets to stabilize predictions. Models can also be slow to train on small datasets relative to other methods.</li>
+<li>This model is a good candidate because of it's general effectiveness as a classifier, because our problem is a 2-class problem, and because it has low computational requirements.</li>
 </ul>
 </li>
 </ol>
@@ -12562,8 +12563,8 @@ F1 score for test set: 0.8060.
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
-<p>The Logistic Regression Classifier is basically a mathematical function that takes information about a student as input and computes the probability that a student will pass their final exam. If the probability is above a certain threshold, we predict that the student will pass. If the probability is below that threshold, we predict that the student won't pass.</p>
-<p>We train the model by letting it practice on the data we already have about our students. For each of the students in our training group, we have the model guess whether or not the student will pass their exam. If it gets the answer wrong, we use a mathematical function to correct our model so that it will hopefully get that answer right next time. The model starts out getting most of the answers wrong, but after we train it for enough time, it's able to make accurate predictions most of the time.</p>
+<p>The Logistic Regression Classifier is a mathematical function that takes information about a student as input (age, sex, school, etc) and computes the probability that a student will pass their final exam. Each of the student features, like their age, is weighted relative to it's importance as a predictor so that important features will have a larger impact on the final prediction. If the predicted probability is above a certain threshold, we predict that the student will pass. If the probability is below that threshold, we predict that the student won't pass.</p>
+<p>We train the model by letting it practice on the data we already have about our students. For each of the students in our training group, we have the model guess whether or not the student will pass their exam. If it gets the answer wrong, we use a mathematical function to correct our model so that it will hopefully get that answer right next time. We correct the model by either increasing or decreasing the importance of some of the features of our students (make age more important, sex less important, etc) in such a way that the error between our prediction and the correct answer is reduced. The model starts out getting most of the answers wrong, but after we train it for enough time, it's able to make accurate predictions most of the time.</p>
 
 </div>
 </div>
